@@ -1,0 +1,36 @@
+FROM php:7.3-cli-alpine
+MAINTAINER Kevin Bentlage <kevin@cobytes.com>
+
+# Install basic packages
+RUN apk add --update ca-certificates curl openssh-client rsync git unzip tar   
+ 
+# Install NodeJS
+RUN apk add --update nodejs npm
+
+# Install Composer
+RUN curl --silent https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install WP-CLI
+RUN curl --silent --output /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x /usr/local/bin/wp
+
+# Create 'build' group and user
+RUN addgroup -S build && adduser -S build -G build -h /build
+
+# Install global NPM packages
+RUN npm install -g grunt yarn
+
+# Switch to 'build' user
+USER build
+WORKDIR /build
+
+# Prepare SSH environment
+RUN mkdir -p ~/.ssh
+RUN echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+# Configure Composer
+ENV COMPOSER_NO_INTERACTION 1
+
+# Install global Composer speedup packages
+RUN composer global require hirak/prestissimo:@stable
+RUN composer global require jakub-onderka/php-parallel-lint:@stable
+RUN composer global require nette/code-checker:~2.5.0
