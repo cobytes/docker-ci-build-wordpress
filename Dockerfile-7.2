@@ -16,6 +16,9 @@ RUN curl --silent --output /usr/local/bin/wp https://raw.githubusercontent.com/w
 # Create 'build' group and user
 RUN addgroup -S build && adduser -S build -G build -h /build
 
+# Give 'build' user sudo permissions
+RUN echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
 # Install global NPM packages
 RUN npm install -g grunt yarn
 
