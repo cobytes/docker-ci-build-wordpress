@@ -2,7 +2,7 @@ FROM php:7.3-cli-alpine
 MAINTAINER Kevin Bentlage <kevin@cobytes.com>
 
 # Install basic packages
-RUN apk add --update ca-certificates curl openssh-client rsync git unzip tar   
+RUN apk add --update ca-certificates curl openssh-client rsync git unzip tar sudo
  
 # Install NodeJS
 RUN apk add --update nodejs npm
@@ -22,13 +22,15 @@ RUN echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # Install global NPM packages
 RUN npm install -g grunt yarn
 
+# Disable SSH StrictHostKeyChecking
+RUN echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+
 # Switch to 'build' user
 USER build
 WORKDIR /build
 
 # Prepare SSH environment
 RUN mkdir -p ~/.ssh
-RUN echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 # Configure Composer
 ENV COMPOSER_NO_INTERACTION 1
