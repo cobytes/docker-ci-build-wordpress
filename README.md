@@ -11,6 +11,7 @@
 * git
 * unzip
 * tar
+* sudo
 
 ## PHP extensions added
 
