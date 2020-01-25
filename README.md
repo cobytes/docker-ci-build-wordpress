@@ -49,3 +49,4 @@ Default 'build' user and group added, all build commands are executed as this us
 * 7.1
 * 7.2
 * 7.3
+* 7.4
