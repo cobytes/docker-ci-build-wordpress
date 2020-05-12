@@ -2,7 +2,23 @@ FROM php:7.0-cli-alpine
 MAINTAINER Kevin Bentlage <kevin@cobytes.com>
 
 # Install basic packages
-RUN apk add --update ca-certificates curl openssh-client rsync git unzip tar sudo
+RUN apk add --update \
+  ca-certificates \
+  build-base \
+  autoconf \
+  sudo \
+  curl rsync git \
+  openssh-client \
+  unzip tar \
+  freetype-dev \
+  libjpeg-turbo-dev \
+  libpng-dev \
+  libzip-dev
+
+# Install php extensions
+RUN docker-php-ext-configure gd && docker-php-ext-install gd && \
+  docker-php-ext-configure zip && docker-php-ext-install zip && \
+  docker-php-ext-configure bcmath && docker-php-ext-install bcmath
     
 # Install NodeJS
 RUN apk add --update nodejs nodejs-npm

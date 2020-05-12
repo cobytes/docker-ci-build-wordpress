@@ -5,17 +5,25 @@
 ## APT packages added
 
 * ca-certificates
+* build-base
+* autoconf
+* sudo
 * curl
-* openssh-client
 * rsync
 * git
+* openssh-client
 * unzip
 * tar
-* sudo
+* freetype-dev
+* libjpeg-turbo-dev
+* libpng-dev
+* libzip-dev
 
 ## PHP extensions added
 
-No extra extensions added on top of the base PHP images.
+* gd
+* zip
+* bcmath
 
 ## (Build)Tools added
 
