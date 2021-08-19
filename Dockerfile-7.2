@@ -24,9 +24,9 @@ RUN docker-php-ext-configure gd && docker-php-ext-install gd && \
   docker-php-ext-configure zip && docker-php-ext-install zip && \
   docker-php-ext-configure bcmath && docker-php-ext-install bcmath && \
   docker-php-ext-configure soap && docker-php-ext-install soap
- 
-# Install NodeJS
-RUN apk add --update nodejs
+
+# Install npm
+RUN apk add --update --no-cache npm
 
 # Install Composer
 RUN curl --silent https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
