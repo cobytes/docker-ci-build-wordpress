@@ -7,7 +7,7 @@ do
 	VERSION=$(echo $DOCKERFILE | sed -e "s/^Dockerfile-//")
 	
 	echo "Build $VERSION."
-	docker build -t cobytes/ci-build-wordpress:$VERSION -f $DOCKERFILE .	
+	docker build --no-cache -t cobytes/ci-build-wordpress:$VERSION -f $DOCKERFILE .	
 
 	echo "Push $VERSION."
 	docker push cobytes/ci-build-wordpress:$VERSION

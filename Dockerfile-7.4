@@ -2,7 +2,7 @@ FROM php:7.4-cli-alpine
 MAINTAINER Kevin Bentlage <kevin@cobytes.com>
 
 # Install basic packages
-RUN apk add --update \
+RUN apk add --update --no-cache \
   ca-certificates \
   build-base \
   autoconf \
@@ -13,15 +13,23 @@ RUN apk add --update \
   freetype-dev \
   libjpeg-turbo-dev \
   libpng-dev \
-  libzip-dev
+  libzip-dev \
+  libxml2-dev
+
+# Install bash
+RUN apk add --update --no-cache bash
 
 # Install php extensions
 RUN docker-php-ext-configure gd && docker-php-ext-install gd && \
   docker-php-ext-configure zip && docker-php-ext-install zip && \
-  docker-php-ext-configure bcmath && docker-php-ext-install bcmath
- 
+  docker-php-ext-configure bcmath && docker-php-ext-install bcmath && \
+  docker-php-ext-configure soap && docker-php-ext-install soap
+
 # Install NodeJS
-RUN apk add --update nodejs npm
+RUN apk add --update --no-cache nodejs
+
+# Cleanup
+RUN rm -rf /tmp/* /var/cache/apk/
 
 # Install Composer
 RUN curl --silent https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -45,13 +53,11 @@ RUN echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 USER build
 WORKDIR /build
 
+# Switch to 'bash' shell
+SHELL ["/bin/bash", "-c"]
+
 # Prepare SSH environment
 RUN mkdir -p ~/.ssh
 
 # Configure Composer
 ENV COMPOSER_NO_INTERACTION 1
-
-# Install global Composer speedup packages
-RUN composer global require hirak/prestissimo:@stable
-RUN composer global require jakub-onderka/php-parallel-lint:@stable
-RUN composer global require nette/code-checker:~2.5.0

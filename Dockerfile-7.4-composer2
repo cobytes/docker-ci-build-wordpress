@@ -1,0 +1,23 @@
+FROM cobytes/ci-build-wordpress:7.4 
+MAINTAINER Kevin Bentlage <kevin@cobytes.com>
+
+# Switch to 'root' user
+USER root
+
+# Update Composer
+RUN composer self-update --2
+
+# Switch to 'build' user
+USER build
+WORKDIR /build
+
+# Prepare SSH environment
+RUN mkdir -p ~/.ssh
+
+# Configure Composer
+ENV COMPOSER_NO_INTERACTION 1
+
+# Remove global composer packages
+RUN composer global remove hirak/prestissimo
+RUN composer global remove jakub-onderka/php-parallel-lint
+RUN composer global remove nette/code-checker

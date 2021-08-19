@@ -18,12 +18,14 @@
 * libjpeg-turbo-dev
 * libpng-dev
 * libzip-dev
+* libxml2-dev
 
 ## PHP extensions added
 
 * gd
 * zip
 * bcmath
+* soap
 
 ## (Build)Tools added
 
@@ -36,13 +38,6 @@
 * grunt
 * yarn
 
-## Composer packages globally installed
-
-* [composer](https://getcomposer.org/) (of course)
-* [hirak/prestissimo](https://github.com/hirak/prestissimo) which speeds up composer install
-* [jakub-onderka/php-parallel-lint](https://github.com/JakubOnderka/PHP-Parallel-Lint) which tests PHP syntax in parallel
-* [nette/code-checker](https://github.com/nette/code-checker) which checks for coding style and template error in Nette framework
- 
 ## User / Group added
 
 Default 'build' user and group added, all build commands are executed as this user.
