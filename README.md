@@ -49,7 +49,12 @@ Default 'build' user and group added, all build commands are executed as this us
 ## Available tags (corresponds to PHP version)
 
 * 7.0
+* 7.0-composer2
 * 7.1
+* 7.1-composer2
 * 7.2
+* 7.2-composer2
 * 7.3
+* 7.3-composer2
 * 7.4
+* 7.4-composer2
